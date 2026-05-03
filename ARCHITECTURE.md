@@ -10,6 +10,8 @@ This document defines the complete system architecture for `efficiency-auditor`.
 
 It is designed to be model-agnostic and system-agnostic — it observes all agent traffic passively and never blocks the pipeline.
 
+The module is particularly valuable in systems that use ephemeral worker context windows (inspired by [Late](https://github.com/mlhher/late)'s approach) — since each worker spawns fresh, the Auditor gets clean per-task token data with no cross-task pollution.
+
 ---
 
 ## Module Hierarchy
