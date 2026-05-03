@@ -58,7 +58,7 @@ The module is particularly valuable in systems that use ephemeral worker context
 
 ## Post-Change Validation
 
-After any tier change, the Auditor monitors the affected agent for a defined period. Tech Lead scores every task output. Efficiency Director issues a verdict report — keep, revert, or escalate.
+After any tier change, the Auditor monitors the affected agent for a defined period. The host system's Tech Lead scores every task output during that period. Efficiency Director issues a verdict report — keep, revert, or escalate.
 
 If quality degrades mid-period, escalation happens immediately rather than waiting for the period to end.
 
@@ -72,7 +72,7 @@ Any revert involving a paid model tier requires executive approval via `#approva
 const auditor = new EfficiencyAuditor({
   currency: "CAD",           // USD | CAD | GBP | EUR
   monitoringPeriod: 7,       // days to monitor after a tier change
-  qualityThreshold: 7,       // minimum acceptable Tech Lead score (1-10)
+  qualityThreshold: 7,       // minimum acceptable quality score (1-10)
   reportInterval: "daily",   // session | daily | weekly
   discordChannel: "#efficiency"
 })
@@ -85,7 +85,6 @@ const auditor = new EfficiencyAuditor({
 ### Efficiency Director ← Auditor (report)
 
 ```javascript
-// Instantiate with: new EfficiencyAuditor({ currency: "CAD" })
 payload: {
   period: "session | daily | weekly",
   currency: "USD | CAD | GBP | EUR",
@@ -172,8 +171,8 @@ payload: {
     tasksSampled: 0
   },
   qualityTracking: {
-    baseline: 0,          // Tech Lead score before change
-    scores: [],           // Tech Lead scores over monitoring period
+    baseline: 0,
+    scores: [],
     average: 0,
     trend: "improving | stable | degrading"
   },
@@ -185,7 +184,7 @@ payload: {
   },
   verdict: "correct | incorrect | inconclusive",
   action: "keep | revert | escalate",
-  requiresApproval: true  // if revert involves paid model
+  requiresApproval: true
 }
 ```
 
@@ -200,8 +199,6 @@ The module posts to two channels in the host system's Discord server:
 
 ---
 
-## What's next
+## Integration Guide
 
-⬜ Error handling
-⬜ Integration guide — how to plug into any agent system
-⬜ Pipeline hooks — where to attach the Auditor in a message pipeline
+Coming soon — how to plug this module into any agent system.
