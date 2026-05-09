@@ -12,6 +12,8 @@ It is designed to be model-agnostic and system-agnostic — it observes all agen
 
 The module is particularly valuable in systems that use ephemeral worker context windows (inspired by [Late](https://github.com/mlhher/late)'s approach) — since each worker spawns fresh, the Auditor gets clean per-task token data with no cross-task pollution.
 
+Part of the [Bessemer Agentic](https://github.com/usebessemer) open source ecosystem.
+
 ---
 
 ## Module Hierarchy
@@ -52,7 +54,7 @@ The module is particularly valuable in systems that use ephemeral worker context
 | Revert to paid model | Requires executive approval |
 | Org restructuring | Requires executive approval |
 
-**Executive approval flow:** Efficiency Director posts recommendation to `#approvals` Discord channel. Executive reacts ✅ to approve or ❌ to reject. System waits before acting.
+**Executive approval flow:** Efficiency Director posts recommendation to `#approvals` Discord channel. Executive types `approve` to confirm or `reject` to decline. System waits before acting.
 
 ---
 
@@ -69,20 +71,22 @@ Any revert involving a paid model tier requires executive approval via `#approva
 ## Instantiation
 
 ```javascript
+const { EfficiencyAuditor } = require('@usebessemer/efficiency-auditor');
+
 const auditor = new EfficiencyAuditor({
   currency: "CAD",           // USD | CAD | GBP | EUR
   monitoringPeriod: 7,       // days to monitor after a tier change
   qualityThreshold: 7,       // minimum acceptable quality score (1-10)
   reportInterval: "daily",   // session | daily | weekly
   discordChannel: "#efficiency"
-})
+});
 ```
 
 ---
 
 ## Contracts
 
-### Efficiency Director ← Auditor (report)
+### Efficiency Director <- Auditor (report)
 
 ```javascript
 payload: {
@@ -115,7 +119,7 @@ payload: {
 }
 ```
 
-### Director ← Efficiency Director (recommendation)
+### Director <- Efficiency Director (recommendation)
 
 ```javascript
 payload: {
@@ -153,7 +157,7 @@ payload: {
 }
 ```
 
-### Director ← Efficiency Director (change validation report)
+### Director <- Efficiency Director (change validation report)
 
 ```javascript
 payload: {
@@ -195,10 +199,12 @@ payload: {
 The module posts to two channels in the host system's Discord server:
 
 - `#efficiency` — periodic reports and recommendations
-- `#approvals` — upgrade requests requiring executive approval (✅/❌)
+- `#approvals` — upgrade requests requiring executive approval
 
 ---
 
-## Integration Guide
+## Status
 
-Coming soon — how to plug this module into any agent system.
+**v0.1.0 — Architecture release.** Contracts, trust boundaries, and integration interface are defined. Implementation coming in v0.2.0.
+
+This is an intentional design-first release. The architecture is stable and ready for community contribution.
